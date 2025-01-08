@@ -3,45 +3,73 @@ package com.isep.g10;
 import java.util.ArrayList;
 
 public class Kanban {
-    private ArrayList<Tache> TachesAFaire;
-    private ArrayList<Tache> TachesEnCours;
-    private ArrayList<Tache> TachesTermine;
+    private static ArrayList<Tache> TachesAFaire;
+    private static ArrayList<Tache> TachesEnCours;
+    private static ArrayList<Tache> TachesTermine;
 
-    public Kanban() {
-        this.TachesAFaire = new ArrayList<Tache>();
-        this.TachesEnCours = new ArrayList<Tache>();
-        this.TachesTermine = new ArrayList<Tache>();
-    }
-
-    public ArrayList<Tache> getTachesAFaire() {
+    public static ArrayList<Tache> getTachesAFaire() {
         return TachesAFaire;
     }
 
-    public ArrayList<Tache> getTachesEnCours() {
+    public static ArrayList<Tache> getTachesEnCours() {
         return TachesEnCours;
     }
 
-    public ArrayList<Tache> getTachesTermine() {
+    public static ArrayList<Tache> getTachesTermine() {
         return TachesTermine;
     }
 
-    public void moveTache(Tache tache) {
+    public static void moveTache(Tache tache) {
         switch (tache.getCategory()) {
             case "a faire":
-                TachesAFaire.add(tache);
+                for (Tache t : TachesAFaire) {
+                    if (t != tache) {
+                        TachesAFaire.add(tache);
+                        if (TachesEnCours.contains(tache)) {
+                            TachesEnCours.remove(tache);
+                        }else if (TachesTermine.contains(tache)) {
+                            TachesTermine.remove(tache);
+                        }
+                    }else{
+                    System.out.println("Tache deja existante dans la liste des taches a faire");
+                    }
+                }
+                
                 break;
             case "en cours":
-                TachesEnCours.add(tache);
+                for (Tache t : TachesEnCours) {
+                    if (t != tache) {
+                        TachesEnCours.add(tache);
+                        if (TachesAFaire.contains(tache)) {
+                            TachesAFaire.remove(tache);
+                        }else if (TachesTermine.contains(tache)) {
+                            TachesTermine.remove(tache);
+                        }
+                    }else{
+                    System.out.println("Tache deja existante dans la liste des taches en cours");
+                    }
+                }
                 break;
             case "termine":
-                TachesTermine.add(tache);
+                for (Tache t : TachesTermine) {
+                    if (t != tache) {
+                        TachesTermine.add(tache);
+                        if (TachesAFaire.contains(tache)) {
+                            TachesAFaire.remove(tache);
+                        }else if (TachesEnCours.contains(tache)) {
+                            TachesEnCours.remove(tache);
+                        }
+                    }else{
+                    System.out.println("Tache deja existante dans la liste des taches termine");
+                    }
+                }
                 break;
             default:
                 break;
         }
     }
 
-    public void removeTache(Tache tache) {
+    public static void removeTache(Tache tache) {
         switch (tache.getCategory()) {
             case "a faire":
                 TachesAFaire.remove(tache);

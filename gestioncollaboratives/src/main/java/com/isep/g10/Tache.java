@@ -27,9 +27,7 @@ public class Tache {
         this.descriptions = descriptions;
         this.commentaires = "";
         // add tache to Kanban
-
-        // add tache to projet
-
+        Kanban.moveTache(this);
     }
 
     public int getId() {
@@ -98,11 +96,13 @@ public class Tache {
 
     public void setCategory(String category) {
         // verifier si category est valide
-
-        // update Kanban
-        
-        this.category = category;
-
+        if (!category.equals("a faire") && !category.equals("en cours") && !category.equals("termine")) {
+            System.out.println("Category invalide, veuillez choisir entre 'a faire', 'en cours' et 'termine'");
+        }else{
+            // update Kanban
+            this.category = category;
+            Kanban.moveTache(this);
+        }
     }
 
     public void setDescriptions(String descriptions) {
@@ -114,11 +114,23 @@ public class Tache {
     }
 
     public void addMembre(Employe employe) {
-        membresTache.add(employe);
+        for (Employe e : membresTache) {
+            if (e != employe) {
+                membresTache.add(employe);
+            }else{
+                System.out.println("Employe deja membre de la tache");
+            }
+        }
     }
 
     public void deletMembre(Employe employe) {
-        membresTache.remove(employe);
+        for (Employe e : membresTache) {
+            if (e == employe) {
+                membresTache.remove(employe);
+            }else{
+                System.out.println("Employe n'est pas un membre de la tache");
+            }
+        }
     }
 
     public void addCommentaire(String commentaire) {
@@ -129,20 +141,29 @@ public class Tache {
         this.commentaires = this.commentaires.replace(commentaire + "\n", "");
     }
 
-    public void addTache(Tache tache) {
+    public void addTache(Projet projet) {
         // add tache to projet
+        projet.addTache(this);
 
         // add tache to Kanban
-
+        Kanban.moveTache(this);
     }
 
     public void deleteTache(Tache tache) {
         // delete tache from projet
+        for (Projet projet : Projet.getProjets()) {
+            for (Tache t : projet.getTaches()) {
+                if (t == tache) {
+                    projet.deleteTache(tache);
+                }
+            }
+        }
 
         // delete tache from Kanban
-
+        Kanban.removeTache(tache);
     }
 
+    @Override
     public String toString() {
         return "Tache [id=" + id + ", nom=" + nom + ", dateLimit=" + dateLimit + ", budget=" + budget + ", realCost=" + realCost + ", priority=" + priority + ", category=" + category + ", \ndescriptions=" + descriptions + ", \ncommentaires=" + commentaires + "]";
     }

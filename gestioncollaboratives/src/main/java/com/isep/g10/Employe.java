@@ -17,6 +17,18 @@ public class Employe extends Personne {
     }
 
     public ArrayList<Projet> getHistoriqueProjets() {
+        for (Projet projet : Projet.getProjets()) {
+            if (projet.getMembresProjet().contains(this) && !historiqueProjets.contains(projet)) {
+                historiqueProjets.add(projet);
+            }
+        }
+
+        for (Projet projet : historiqueProjets) {
+            if (!projet.getMembresProjet().contains(this)) {
+                historiqueProjets.remove(projet);
+            }
+        }
+
         return historiqueProjets;
     }
 
@@ -26,6 +38,17 @@ public class Employe extends Personne {
 
     public static ArrayList<Employe> getEmployes() {
         return employes;
+    }
+
+    @Override
+    public String toString() {
+        String historiqueProjetsStr = "";
+        for (Projet projet : historiqueProjets) {
+            historiqueProjetsStr += "\nNom du projet : " + projet.getNom() + " id : " + projet.getId() + ", ";
+        }
+
+        return "Employe [id=" + this.getId() + ", nom=" + this.getNom() + "]"
+                + " historiqueProjets : " + historiqueProjets;
     }
     
 }

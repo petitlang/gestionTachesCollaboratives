@@ -76,19 +76,44 @@ public class Projet {
     }
 
     public void addMembre(Employe employe) {
-        membresProjet.add(employe);
+        for (Employe e : membresProjet) {
+            if (e != employe) {
+                membresProjet.add(employe);
+            }else{
+                System.out.println("Employe deja membre du projet");
+            }
+        }
     }
 
     public void deleteMembre(Employe employe) {
-            membresProjet.remove(employe);
+        for (Employe e : membresProjet) {
+            if (e == employe) {
+                membresProjet.remove(employe);
+            }else{
+                System.out.println("Employe n'est pas un membre du projet");
+            }
+        }
+        
     }
 
     public void addTache(Tache tache) {
-        taches.add(tache);
+        for (Tache t : taches) {
+            if (t != tache) {
+                taches.add(tache);
+            }else{
+                System.out.println("Tache deja ajoutee au projet");
+            }
+        }
     }
 
     public void deleteTache(Tache tache) {
-        taches.remove(tache);
+        for (Tache t : taches) {
+            if (t == tache) {
+                taches.remove(tache);
+            }else{
+                System.out.println("Tache n'est pas une tache du projet");
+            }
+        }
     }
 
     public static void deleteProjet(Projet projet) {
@@ -99,9 +124,20 @@ public class Projet {
         return projets;
     }
 
+    @Override
     public String toString() {
+        String tachesString = "";
+        for (Tache t : taches) {
+            tachesString += t.toString() + "\n";
+        }
+
+        String membresString = "";
+        for (Employe e : membresProjet) {
+            membresString += "Employe [id=" + e.getId() + ", nom=" + e.getNom() + "]" + "\n";
+        }
         return "Projet [id=" + id + ", nom=" + nom + ", dateLimit=" + dateLimit + ", budget=" + budget + ", realCost=" + realCost + "]"
-                + "\nTaches du projet : \n" + taches;
+                + "\nMembres du projet : " + membresString
+                + "\nTaches du projet : \n" + tachesString + "\n";
     }
 
 }
