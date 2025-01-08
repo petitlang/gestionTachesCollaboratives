@@ -1,0 +1,8 @@
+- 完善， 比如：
+	addMembres得先看有没有再加，同理pour deletMembres
+
+- 对于Projet里面的taches，在toString方法里的时候会被Tache的toString方法正确返回吗？
+
+- Tache的两个方法add和delet  注意修改构造器
+
+- Tache修改setCategory
