@@ -14,17 +14,23 @@ public class Projet {
     private static ArrayList<Projet> projets;
 
     public Projet(int id, String nom, String dateLimit, double budget) {
-        this.id = id;
-        this.nom = nom;
-        this.dateLimit = dateLimit;
-        this.budget = budget;
-        this.realCost = 0;
-        this.membresProjet = new ArrayList<Employe>();
-        this.taches = new ArrayList<Tache>();
         if (projets == null) {
             projets = new ArrayList<Projet>();
         }
-        projets.add(this);
+        for (Projet projet : projets) {
+            if (id != projet.getId()) {
+                this.id = id;
+                this.nom = nom;
+                this.dateLimit = dateLimit;
+                this.budget = budget;
+                this.realCost = 0;
+                this.membresProjet = new ArrayList<Employe>();
+                this.taches = new ArrayList<Tache>();
+                projets.add(this);
+            } else {
+                System.out.println("Projet deja existant");
+            }
+        }
     }
 
     public int getId() {

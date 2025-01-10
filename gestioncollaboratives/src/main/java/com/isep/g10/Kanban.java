@@ -19,6 +19,14 @@ public class Kanban {
         return TachesTermine;
     }
 
+    public static ArrayList<Tache> getTaches(){
+        ArrayList<Tache> taches = new ArrayList<Tache>();
+        taches.addAll(TachesAFaire);
+        taches.addAll(TachesEnCours);
+        taches.addAll(TachesTermine);
+        return taches;
+    }
+
     public static void moveTache(Tache tache) {
         switch (tache.getCategory()) {
             case "a faire":

@@ -4,16 +4,25 @@ import java.util.ArrayList;
 
 public class Employe extends Personne {
 
+    private String role;
     private ArrayList<Projet> historiqueProjets;
     private static ArrayList<Employe> employes;
 
-    public Employe(int id, String nom) {
+    public Employe(int id, String nom, String role) {
         super(id, nom);
-        this.historiqueProjets = new ArrayList<Projet>();
         if (employes == null) {
             employes = new ArrayList<Employe>();
         }
-        employes.add(this);
+        for (Employe employe : employes) {
+            if (id != employe.getId()) {
+                this.setId(id);
+                this.role = role;
+                this.historiqueProjets = new ArrayList<Projet>();
+                employes.add(this);
+            } else {
+                System.out.println("Employe deja existant");
+            }
+        }
     }
 
     public ArrayList<Projet> getHistoriqueProjets() {

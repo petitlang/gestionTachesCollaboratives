@@ -16,18 +16,24 @@ public class Tache {
     private String commentaires;
 
     public Tache(int id, String nom, String dateLimit, double budget, int priority, String descriptions) {
-        this.id = id;
-        this.nom = nom;
-        this.dateLimit = dateLimit;
-        this.budget = budget;
-        this.realCost = 0;
-        this.priority = priority;
-        this.category = "a faire";
-        this.membresTache = new ArrayList<Employe>();
-        this.descriptions = descriptions;
-        this.commentaires = "";
-        // add tache to Kanban
-        Kanban.moveTache(this);
+        for (Tache tache : Kanban.getTaches()) {
+            if (id != tache.getId()) {
+                this.id = id;
+                this.nom = nom;
+                this.dateLimit = dateLimit;
+                this.budget = budget;
+                this.realCost = 0;
+                this.priority = priority;
+                this.category = "a faire";
+                this.membresTache = new ArrayList<Employe>();
+                this.descriptions = descriptions;
+                this.commentaires = "";
+                // add tache to Kanban
+                Kanban.moveTache(this);
+            } else {
+                System.out.println("Tache deja existante");
+            }
+        }
     }
 
     public int getId() {
@@ -133,12 +139,12 @@ public class Tache {
         }
     }
 
-    public void addCommentaire(String commentaire) {
-        this.commentaires += commentaire + "\n";
+    public void deleteCommentaire() {
+        this.commentaires = "";
     }
 
-    public void deleteCommentaire(String commentaire) {
-        this.commentaires = this.commentaires.replace(commentaire + "\n", "");
+    public void deleteDescription() {
+        this.descriptions = "";
     }
 
     public void addTache(Projet projet) {

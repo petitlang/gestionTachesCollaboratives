@@ -3,3 +3,5 @@
 	检查一下其他的add和remove方法，写成Projet中的那种！！！
 
 - reporter 里面的pdf的方法重写？或许用csv之内的？
+
+- role
